@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PreCipherSaga - Quiz Results</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            margin: 50px;
+            animation: fadeIn 1s ease-out;
+        }
+        h1 {
+            color: #3498db;
+        }
+        #result-container {
+            margin-top: 30px;
+        }
+        #result {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #score {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        #summary {
+            font-size: 16px;
+        }
+        button {
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <h1>PreCipherSaga Quiz Results</h1>
+
+    <div id="result-container">
+        <div id="result"></div>
+        <div id="score"></div>
+        <div id="summary"></div>
+
+        <button onclick="restartQuiz()">Restart Quiz</button>
+    </div>
+
+    <script>
+        const correctAnswersCount = parseInt(sessionStorage.getItem('correctAnswersCount')) || 0;
+        const attemptsCount = parseInt(sessionStorage.getItem('attemptsCount')) || 0;
+
+        document.getElementById('result').innerHTML = `You answered ${correctAnswersCount} out of ${attemptsCount} questions correctly.`;
+        document.getElementById('score').innerHTML = `Your score is ${((correctAnswersCount / attemptsCount) * 100).toFixed(2)}%.`;
+
+        if (attemptsCount > 0) {
+            const skippedQuestionsCount = attemptsCount - correctAnswersCount;
+            if (skippedQuestionsCount > 0) {
+                document.getElementById('summary').innerHTML = `You left ${skippedQuestionsCount} questions unattempted.`;
+            } else {
+                document.getElementById('summary').innerHTML = "Congratulations! You attempted all questions.";
+            }
+        } else {
+            document.getElementById('summary').innerHTML = "You didn't attempt any questions. Better luck next time!";
+        }
+
+        function restartQuiz() {
+            sessionStorage.clear();
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
